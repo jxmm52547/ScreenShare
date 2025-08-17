@@ -13,13 +13,14 @@ public class RegisterFrame extends JFrame {
     private JPasswordField passwordField;
     private JPasswordField confirmPasswordField;
     private JTextField invitationCodeField;
+    private JTextField nicknameField;
     private UserDAO userDAO;
 
     public RegisterFrame() {
         userDAO = new UserDAO();
         
         setTitle("注册");
-        setSize(400, 350);
+        setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
@@ -43,50 +44,61 @@ public class RegisterFrame extends JFrame {
         gbc.gridy = 0;
         panel.add(usernameField, gbc);
         
+        // 昵称标签和输入框
+        JLabel nicknameLabel = new JLabel("昵称:");
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(nicknameLabel, gbc);
+        
+        nicknameField = new JTextField(15);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel.add(nicknameField, gbc);
+        
         // 密码标签和输入框
         JLabel passwordLabel = new JLabel("密码:");
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         panel.add(passwordLabel, gbc);
         
         passwordField = new JPasswordField(15);
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         panel.add(passwordField, gbc);
         
         // 确认密码标签和输入框
         JLabel confirmPasswordLabel = new JLabel("确认密码:");
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         panel.add(confirmPasswordLabel, gbc);
         
         confirmPasswordField = new JPasswordField(15);
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         panel.add(confirmPasswordField, gbc);
         
         // 邀请码标签和输入框
         JLabel invitationCodeLabel = new JLabel("邀请码:");
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         panel.add(invitationCodeLabel, gbc);
         
         invitationCodeField = new JTextField(15);
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         panel.add(invitationCodeField, gbc);
         
         // 注册按钮
         JButton registerButton = new JButton("注册");
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 1;
         panel.add(registerButton, gbc);
         
         // 返回登录按钮
         JButton backButton = new JButton("返回登录");
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         panel.add(backButton, gbc);
         
         add(panel);
@@ -106,8 +118,9 @@ public class RegisterFrame extends JFrame {
             String password = new String(passwordField.getPassword());
             String confirmPassword = new String(confirmPasswordField.getPassword());
             String invitationCode = invitationCodeField.getText();
+            String nickname = nicknameField.getText();
             
-            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || invitationCode.isEmpty()) {
+            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || invitationCode.isEmpty() || nickname.isEmpty()) {
                 JOptionPane.showMessageDialog(RegisterFrame.this, 
                     "请填写所有字段", "错误", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -139,7 +152,7 @@ public class RegisterFrame extends JFrame {
                 return;
             }
             
-            User user = new User(username, password);
+            User user = new User(username, password, nickname);
             if (userDAO.registerUser(user)) {
                 JOptionPane.showMessageDialog(RegisterFrame.this, 
                     "注册成功!", "成功", JOptionPane.INFORMATION_MESSAGE);

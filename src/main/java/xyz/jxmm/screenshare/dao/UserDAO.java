@@ -8,12 +8,13 @@ import java.sql.*;
 public class UserDAO {
 
     public boolean registerUser(User user) {
-        String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+        String query = "INSERT INTO users (username, password, nickname) VALUES (?, ?, ?)";
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
+            statement.setString(3, user.getNickname());
 
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
@@ -35,7 +36,8 @@ public class UserDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Long id = resultSet.getLong("id");
-                return new User(id, username, password);
+                String nickname = resultSet.getString("nickname");
+                return new User(id, username, password, nickname);
             }
 
         } catch (SQLException e) {

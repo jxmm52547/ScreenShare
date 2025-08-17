@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
         
         // 创建顶部面板显示欢迎信息
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel welcomeLabel = new JLabel("欢迎, " + loggedInUser.getUsername() + "!");
+        JLabel welcomeLabel = new JLabel("欢迎, " + loggedInUser.getNickname() + "!");
         welcomeLabel.setFont(new Font("微软雅黑", Font.BOLD, 16));
         topPanel.add(welcomeLabel);
         panel.add(topPanel, BorderLayout.NORTH);
