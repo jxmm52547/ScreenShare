@@ -15,6 +15,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("org.swinglabs.swingx:swingx-all:1.6.5")
+    // 添加JavaCV依赖用于H264编解码
+    implementation("org.bytedeco:javacv-platform:1.5.7")
 }
 
 tasks.test {
